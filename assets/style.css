@@ -1,0 +1,52 @@
+/*Estilos globais da aplicação*/
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo geral da página */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f6f8;
+    color: #333;
+}
+
+/* Container principal */
+.container {
+    max-width: 600px;
+    margin: 60px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Título */
+h1 {
+    margin-bottom: 16px;
+}
+
+/* Parágrafo */
+p {
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+/* Botão */
+button {
+    padding: 10px 18px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007acc;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+/* Efeito hover */
+button:hover {
+    background-color: #005fa3;
+}
