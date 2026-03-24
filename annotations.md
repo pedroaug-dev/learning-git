@@ -1,486 +1,97 @@
-# Git — Manual Profissional para Iniciantes (Completo e Comentado)
-
-## Objetivo do documento
-
-Este material foi escrito para **quem está começando em Git** e precisa de um **manual confiável, profissional e detalhado**, no qual **nenhuma linha de comando fica sem explicação**.
-
-O foco é:
-
-* clareza técnica
-* progressão didática
-* exemplos reais
-* linguagem profissional (sem emojis, sem atalhos excessivos)
-
-Este documento pode ser lido do início ao fim ou usado como **referência futura**.
-
----
-
-## Sumário
-
-1. Conceitos básicos do Git
-2. Configuração inicial do ambiente
-3. Comandos fundamentais
-4. Comandos intermediários
-5. Comandos avançados (uso consciente)
-6. Inspeção, diagnóstico e manutenção
-7. Fluxos de trabalho comuns
-8. Boas práticas
-
----
-
-# 1. Conceitos básicos do Git
-
-Antes dos comandos, é essencial entender **os estados dos arquivos**:
-
-* **Working Directory**: arquivos no seu computador
-* **Staging Area (Index)**: arquivos preparados para commit
-* **Repositório (.git)**: histórico definitivo
-
-Fluxo básico:
-
-```
-Editar arquivo → git add → git commit → histórico salvo
-```
-
----
-
-# 2. Configuração inicial do ambiente
-
-Esses comandos são executados **uma única vez por máquina**.
-
-## Configurar nome do usuário
+# Git — Manual Profissional para Iniciantes (Completo e Comentado)## Objetivo do documentoEste material foi escrito para fornecer um manual confiável e detalhado, onde nenhuma linha de comando fica sem explicação. O foco é clareza técnica, progressão didática e linguagem profissional.
+---## Sumário1. [Conceitos Básicos](#1-conceitos-básicos-do-git)
+2. [Configuração Inicial](#2-configuração-inicial-do-ambiente)
+3. [Diagnóstico de Conexão e SSH (Caso Real)](#3-diagnóstico-de-conexão-e-ssh-caso-real)
+4. [Comandos Fundamentais](#4-comandos-fundamentais)
+5. [Comandos Intermediários](#5-comandos-intermediários)
+6. [Comandos Avançados](#6-comandos-avançados)
+7. [Inspeção e Manutenção](#7-inspeção-diagnóstico-e-manutenção)
+8. [Boas Práticas](#8-boas-práticas)
+---# 1. Conceitos Básicos do GitO Git gerencia estados de arquivos em três áreas:*   **Working Directory**: Arquivos físicos no seu computador.*   **Staging Area (Index)**: Zona de preparação para o próximo commit.*   **Repositório (.git)**: Onde o histórico definitivo é armazenado.
+---# 2. Configuração Inicial do AmbienteExecutados uma única vez por máquina para identificar o autor dos commits.
 
 ```bash
+# Configura nome e e-mail
 git config --global user.name "Seu Nome"
-```
-
-* `git config` → altera configurações do Git
-* `--global` → vale para todos os projetos do usuário
-* `user.name` → nome que aparecerá nos commits
-
----
-
-## Configurar e-mail
-
-```bash
 git config --global user.email "seu@email.com"
-```
 
-* o e-mail deve ser o mesmo usado no GitHub/GitLab
-
----
-
-## Definir editor padrão
-
-```bash
+# Define o VS Code como editor padrão e aguarda o fechamento para prosseguir
 git config --global core.editor "code --wait"
-```
 
-* define o VS Code como editor de mensagens de commit
-* `--wait` garante que o Git espere o editor fechar
-
----
-
-## Ver todas as configurações
-
-```bash
+# Listar todas as configurações ativas
 git config --list
-```
 
-* lista todas as configurações ativas
+------------------------------
+3. Diagnóstico de Conexão e SSH (Caso Real)
+Essencial para resolver problemas de permissão e autenticação entre o notebook e o GitHub.
+3.1 Validar Conexão SSH
 
----
+ssh -T git@github.com
 
-## Criar aliases (atalhos)
 
-```bash
-git config --global alias.st status
-git config --global alias.co checkout
-```
+* Resposta esperada: "Hi [usuario]! You've successfully authenticated..."
+* Nota: Se o teste passar mas o push falhar, o problema é a URL do repositório.
 
-* permite usar `git st` em vez de `git status`
-* melhora produtividade
+3.2 Corrigir Protocolo (HTTPS para SSH)
+Se o repositório foi clonado via HTTPS, altere a URL para usar a chave SSH:
 
----
+# Verificar URL atual
+git remote -v
+# Alterar para SSH
+git remote set-url origin git@github.com:pedroaug-dev/learning-django.git
 
-# 3. Comandos Fundamentais
+------------------------------
+4. Comandos Fundamentais4.1 git init e git clone
 
-## 3.1 `git init`
+* git init: Inicializa um novo repositório local.
+* git clone URL: Copia um repositório remoto para sua máquina.
+* git clone --depth 1 URL: Baixa apenas o último histórico (clone raso/rápido).
 
-Inicializa um repositório Git.
+4.2 git status e git add
 
-```bash
-git init
-```
+* git status: Mostra o estado atual (arquivos modificados/não rastreados).
+* git add .: Adiciona todas as mudanças à Staging Area.
+* git add -p: Permite escolher partes específicas de um arquivo para adicionar.
 
-* cria a pasta `.git`
-* transforma o diretório atual em repositório
+4.3 git commit
 
-```bash
-git init projeto
-```
+* git commit -m "mensagem": Grava as mudanças com uma descrição.
+* git commit --amend: Corrige o último commit (adiciona arquivos ou muda a mensagem).
 
-* cria a pasta `projeto`
-* inicializa o Git dentro dela
+------------------------------
+5. Comandos Intermediários5.1 Branches (Ramos)
 
----
+* git branch: Lista branches locais.
+* git switch -c nova-feature: Cria e entra em uma nova branch.
+* git merge feature: Traz as mudanças da branch feature para a atual.
 
-## 3.2 `git clone`
+5.2 Sincronização Remota
 
-Copia um repositório remoto.
+* git fetch origin: Baixa as novidades do servidor sem mesclar.
+* git pull origin main: Baixa e mescla as novidades da branch main remota.
+* git push origin branch: Envia seus commits locais para o servidor.
 
-```bash
-git clone URL
-```
+------------------------------
+6. Comandos Avançados6.1 git reset (Uso Consciente)
 
-* cria uma pasta com o nome do repositório
-* baixa todo o histórico
+* --soft: Desfaz o commit, mas mantém as alterações nos arquivos.
+* --hard: Desfaz o commit e apaga todas as alterações locais.
 
-```bash
-git clone URL pasta
-```
+6.2 git revert
 
-* clona o repositório dentro da pasta especificada
+* Cria um novo commit que desfaz as alterações de um commit anterior. É a forma mais segura de desfazer algo em projetos compartilhados.
 
-```bash
-git clone --depth 1 URL
-```
+------------------------------
+7. Inspeção, Diagnóstico e Manutenção
 
-* baixa apenas o último commit
-* reduz tempo e espaço
+* git log --oneline --graph: Visualiza o histórico de forma gráfica.
+* git blame arquivo.txt: Mostra quem alterou cada linha do arquivo.
+* git reflog: Histórico de ações para recuperar commits perdidos.
 
----
+------------------------------
+8. Boas Práticas
 
-## 3.3 `git status`
-
-Mostra o estado do repositório.
-
-```bash
-git status
-```
-
-* mostra branch atual
-* arquivos modificados
-* arquivos não rastreados
-
-```bash
-git status -s
-```
-
-* saída resumida
-
----
-
-## 3.4 `git add`
-
-Adiciona arquivos ao staging.
-
-```bash
-git add arquivo.txt
-```
-
-* adiciona apenas o arquivo informado
-
-```bash
-git add .
-```
-
-* adiciona todos os arquivos do diretório atual
-
-```bash
-git add -A
-```
-
-* adiciona tudo, incluindo remoções
-
-```bash
-git add -p
-```
-
-* modo interativo
-* adiciona trechos específicos
-
----
-
-## 3.5 `git commit`
-
-Registra mudanças.
-
-```bash
-git commit -m "mensagem"
-```
-
-* cria commit com mensagem curta
-
-```bash
-git commit -am "mensagem"
-```
-
-* adiciona e commita arquivos já rastreados
-
-```bash
-git commit --amend
-```
-
-* altera o último commit
-* útil para corrigir mensagem ou incluir arquivos esquecidos
-
----
-
-## 3.6 `git log`
-
-Exibe histórico.
-
-```bash
-git log
-```
-
-* histórico completo
-
-```bash
-git log --oneline
-```
-
-* versão resumida
-
-```bash
-git log --graph --all
-```
-
-* visualiza branches e merges
-
----
-
-## 3.7 `git diff`
-
-Mostra diferenças.
-
-```bash
-git diff
-```
-
-* diferenças ainda não adicionadas
-
-```bash
-git diff --staged
-```
-
-* diferenças já preparadas para commit
-
----
-
-## 3.8 `git rm`
-
-Remove arquivos.
-
-```bash
-git rm arquivo.txt
-```
-
-* remove do Git e do disco
-
-```bash
-git rm --cached arquivo.txt
-```
-
-* remove apenas do controle do Git
-
----
-
-# 4. Comandos Intermediários
-
-## 4.1 `git branch`
-
-Gerencia branches.
-
-```bash
-git branch
-```
-
-* lista branches locais
-
-```bash
-git branch nova-branch
-```
-
-* cria branch
-
-```bash
-git branch -d branch
-```
-
-* remove branch já mesclada
-
----
-
-## 4.2 `git switch`
-
-Troca de branch.
-
-```bash
-git switch main
-```
-
-* muda para main
-
-```bash
-git switch -c feature
-```
-
-* cria e muda para a branch
-
----
-
-## 4.3 `git checkout` (legado)
-
-```bash
-git checkout branch
-```
-
-* troca de branch
-
-```bash
-git checkout -- arquivo.txt
-```
-
-* descarta alterações locais do arquivo
-
----
-
-## 4.4 `git merge`
-
-Une branches.
-
-```bash
-git merge feature
-```
-
-* aplica alterações da feature
-
-```bash
-git merge --abort
-```
-
-* cancela merge com conflito
-
----
-
-## 4.5 `git stash`
-
-Salva trabalho temporariamente.
-
-```bash
-git stash
-```
-
-* salva alterações
-
-```bash
-git stash list
-```
-
-* lista stashes
-
-```bash
-git stash pop
-```
-
-* reaplica alterações
-
----
-
-# 5. Comandos Avançados
-
-## 5.1 `git reset`
-
-```bash
-git reset --soft HEAD~1
-```
-
-* desfaz commit
-* mantém staging
-
-```bash
-git reset --hard HEAD~1
-```
-
-* desfaz commit
-* apaga alterações
-
----
-
-## 5.2 `git revert`
-
-```bash
-git revert commit
-```
-
-* cria commit que desfaz outro
-* seguro para repositórios compartilhados
-
----
-
-## 5.3 `git reflog`
-
-```bash
-git reflog
-```
-
-* histórico completo de ações
-* permite recuperar commits perdidos
-
----
-
-# 6. Inspeção, Diagnóstico e Manutenção
-
-```bash
-git show commit      # mostra detalhes de um commit
-git blame arquivo    # mostra autoria linha a linha
-git fsck             # verifica integridade
-git gc               # otimiza o repositório
-```
-
----
-
-# 7. Fluxos de Trabalho Comuns
-
-## Criar feature
-
-```bash
-git switch -c feature
-# editar arquivos
-git add .
-git commit -m "descrição"
-git push -u origin feature
-```
-
-## Atualizar branch
-
-```bash
-git fetch origin
-git rebase origin/main
-git push --force-with-lease
-```
-
----
-
-# 8. Boas Práticas
-
-* commits pequenos e descritivos
-* uma funcionalidade por commit
-* evite `git push --force` sem necessidade
-* use `.gitignore`
-* revise com `git status` antes de commitar
-
----
-
-## Conclusão
-
-Dominar este material garante uma base sólida em Git para:
-
-* faculdade
-* mercado de trabalho
-* projetos pessoais
-* concursos
-
-Este documento foi pensado para **consulta de longo prazo**.
+   1. Commits Atômicos: Um commit deve resolver apenas um problema/funcionalidade.
+   2. Mensagens Claras: Use verbos no imperativo (ex: "Adiciona", "Corrige").
+   3. Nunca Force: Evite git push --force sem necessidade.
+   4. Ignore o Desnecessário: Use sempre um arquivo .gitignore.
