@@ -1,56 +1,61 @@
-# 📘 Git — Manual Profissional para Iniciantes (Completo e Comentado)
+# 📘 Git — Manual Profissional para Iniciantes
 
-## 🎯 Objetivo do documento
-
-Este material foi escrito para fornecer um manual confiável e detalhado, onde nenhuma linha de comando fica sem explicação.
-O foco é **clareza técnica**, **progressão didática** e **linguagem profissional**.
+Guia completo, organizado e comentado para uso acadêmico e profissional.
 
 ---
 
 # 📑 Sumário
 
-1. [Conceitos Básicos](#1-conceitos-básicos-do-git)
-2. [Configuração Inicial](#2-configuração-inicial-do-ambiente)
-3. [Diagnóstico de Conexão e SSH (Caso Real)](#3-diagnóstico-de-conexão-e-ssh-caso-real)
-4. [Comandos Fundamentais](#4-comandos-fundamentais)
-5. [Comandos Intermediários](#5-comandos-intermediários)
-6. [Comandos Avançados](#6-comandos-avançados)
-7. [Inspeção e Manutenção](#7-inspeção-diagnóstico-e-manutenção)
-8. [Boas Práticas](#8-boas-práticas)
+* [1. Conceitos Básicos](#1-conceitos-básicos-do-git)
+* [2. Configuração Inicial](#2-configuração-inicial-do-ambiente)
+* [3. Diagnóstico de Conexão e SSH](#3-diagnóstico-de-conexão-e-ssh-caso-real)
+* [4. Comandos Fundamentais](#4-comandos-fundamentais)
+* [5. Comandos Intermediários](#5-comandos-intermediários)
+* [6. Comandos Avançados](#6-comandos-avançados)
+* [7. Inspeção e Manutenção](#7-inspeção-diagnóstico-e-manutenção)
+* [8. Boas Práticas](#8-boas-práticas)
 
 ---
 
 # 1. Conceitos Básicos do Git
 
-O Git gerencia estados de arquivos em três áreas:
+O Git controla versões de arquivos através de três áreas principais:
 
-### 🧩 Working Directory
+### 📂 Working Directory
 
 Arquivos físicos no seu computador.
 
 ### 📦 Staging Area (Index)
 
-Zona de preparação para o próximo commit.
+Área de preparação para o próximo commit.
 
 ### 🗂️ Repositório (.git)
 
-Onde o histórico definitivo é armazenado.
+Local onde o histórico definitivo é armazenado.
+
+Fluxo visual:
+
+```
+Working Directory → Staging Area → Repository
+```
 
 ---
 
 # 2. Configuração Inicial do Ambiente
 
-Executados **uma única vez por máquina** para identificar o autor dos commits.
+Executar apenas **uma vez por máquina**.
 
 ```bash
-# Configura nome e e-mail
+# Configurar nome
 git config --global user.name "Seu Nome"
+
+# Configurar email
 git config --global user.email "seu@email.com"
 
-# Define o VS Code como editor padrão e aguarda o fechamento
+# Definir VS Code como editor padrão
 git config --global core.editor "code --wait"
 
-# Listar todas as configurações ativas
+# Listar configurações
 git config --list
 ```
 
@@ -58,9 +63,7 @@ git config --list
 
 # 3. Diagnóstico de Conexão e SSH (Caso Real)
 
-Essencial para resolver problemas de permissão e autenticação entre o computador e o GitHub.
-
-## 3.1 Validar Conexão SSH
+## 3.1 Testar conexão SSH
 
 ```bash
 ssh -T git@github.com
@@ -72,213 +75,263 @@ Resposta esperada:
 Hi usuario! You've successfully authenticated...
 ```
 
-Observação:
-Se o teste passar mas o push falhar, o problema normalmente é a **URL do repositório**.
+Se funcionar, sua chave SSH está correta.
 
 ---
 
-## 3.2 Corrigir Protocolo (HTTPS → SSH)
-
-Se o repositório foi clonado via HTTPS, ele pedirá senha/token.
-Para usar a chave SSH configurada, altere a URL:
+## 3.2 Verificar URL do repositório
 
 ```bash
-# Verificar URL atual
 git remote -v
+```
 
-# Alterar para SSH
-git remote set-url origin git@github.com:usuario/nome-do-repositorio.git
+Exemplo HTTPS (não recomendado):
+
+```
+https://github.com/user/repositorio.git
+```
+
+Exemplo SSH (recomendado):
+
+```
+git@github.com:user/repositorio.git
+```
+
+---
+
+## 3.3 Alterar HTTPS para SSH
+
+```bash
+git remote set-url origin git@github.com:usuario/repositorio.git
 ```
 
 ---
 
 # 4. Comandos Fundamentais
 
-## 4.1 git init e git clone
+## 4.1 Inicialização
 
 ```bash
 git init
 ```
 
-Inicializa um novo repositório local.
+Cria um repositório local.
 
 ```bash
 git clone URL
 ```
 
-Copia um repositório remoto para sua máquina.
+Clona um repositório remoto.
 
 ```bash
 git clone --depth 1 URL
 ```
 
-Baixa apenas o último histórico (clone raso/rápido).
+Clone rápido sem histórico completo.
 
 ---
 
-## 4.2 git status e git add
+## 4.2 Verificação de estado
 
 ```bash
 git status
 ```
 
-Mostra o estado atual (arquivos modificados/não rastreados).
+Mostra:
+
+* arquivos modificados
+* arquivos novos
+* arquivos staged
+* branch atual
+
+---
+
+## 4.3 Adicionar arquivos
+
+Adicionar tudo:
 
 ```bash
 git add .
 ```
 
-Adiciona todas as mudanças à Staging Area.
+Adicionar arquivo específico:
+
+```bash
+git add arquivo.txt
+```
+
+Adicionar parcialmente:
 
 ```bash
 git add -p
 ```
 
-Permite escolher partes específicas de um arquivo para adicionar.
-
 ---
 
-## 4.3 git commit
+## 4.4 Commit
 
 ```bash
 git commit -m "mensagem"
 ```
 
-Grava as mudanças com uma descrição.
+Editar último commit:
 
 ```bash
 git commit --amend
 ```
 
-Corrige o último commit (adiciona arquivos ou muda a mensagem).
-
 ---
 
 # 5. Comandos Intermediários
 
-## 5.1 Branches (Ramos)
+## 5.1 Branches
+
+Listar:
 
 ```bash
 git branch
 ```
 
-Lista branches locais.
+Criar nova:
 
 ```bash
-git switch -c nova-feature
+git switch -c nova-branch
 ```
 
-Cria e entra em uma nova branch.
+Trocar:
+
+```bash
+git switch main
+```
+
+Merge:
 
 ```bash
 git merge feature
 ```
 
-Traz as mudanças da branch feature para a atual.
-
 ---
 
-## 5.2 Sincronização Remota
+## 5.2 Sincronização remota
+
+Baixar atualizações:
 
 ```bash
 git fetch origin
 ```
 
-Baixa as novidades do servidor sem mesclar com seu código.
+Baixar e mesclar:
 
 ```bash
 git pull origin main
 ```
 
-Baixa e mescla as novidades da branch main remota.
+Enviar commits:
 
 ```bash
-git push origin branch
+git push origin main
 ```
-
-Envia seus commits locais para o servidor.
 
 ---
 
 # 6. Comandos Avançados
 
-## 6.1 git reset (Uso Consciente)
+## 6.1 Reset
+
+Soft (mantém alterações):
 
 ```bash
 git reset --soft HEAD~1
 ```
 
-Desfaz o commit, mas mantém as alterações nos arquivos.
+Hard (apaga tudo):
 
 ```bash
 git reset --hard HEAD~1
 ```
 
-Desfaz o commit e apaga todas as alterações.
-
-⚠️ Use com cuidado, pois pode apagar código.
+⚠️ Cuidado: o hard remove código.
 
 ---
 
-## 6.2 git revert
+## 6.2 Revert
+
+Forma segura de desfazer commit:
 
 ```bash
-git revert HASH_DO_COMMIT
+git revert HASH
 ```
 
-Diferente do reset, o revert cria um **novo commit** que desfaz as alterações de um commit anterior.
-É a forma mais segura em projetos compartilhados.
+Cria um novo commit revertendo o anterior.
 
 ---
 
 # 7. Inspeção, Diagnóstico e Manutenção
 
+Histórico resumido:
+
 ```bash
 git log --oneline --graph
 ```
 
-Visualiza o histórico de forma gráfica e resumida.
+Ver autor por linha:
 
 ```bash
 git blame arquivo.txt
 ```
 
-Mostra quem alterou cada linha do arquivo e quando.
+Recuperar commits perdidos:
 
 ```bash
 git reflog
 ```
 
-O "diário de bordo" do Git.
-Permite recuperar quase qualquer commit deletado por erro.
-
 ---
 
 # 8. Boas Práticas
 
-## ✅ 1. Commits Atômicos
+## ✔ Commits atômicos
 
-Um commit deve resolver apenas **um problema ou funcionalidade**.
+Um commit = uma alteração lógica
 
-## ✅ 2. Mensagens Claras
-
-Use verbos no imperativo:
+Exemplo:
 
 ```
-Adiciona função X
-Corrige bug Y
-Atualiza layout do footer
+Adiciona login
+Corrige footer
+Atualiza CSS
 ```
 
-## ✅ 3. Nunca Force
+---
 
-Evite:
+## ✔ Mensagens padronizadas
+
+Formato recomendado:
+
+```
+tipo: descrição
+```
+
+Exemplos:
+
+```
+feat: add login page
+fix: correct footer spacing
+docs: update git manual
+style: format markdown file
+```
+
+---
+
+## ✔ Evite force push
+
+Não recomendado:
 
 ```bash
 git push --force
 ```
 
-Prefira:
+Seguro:
 
 ```bash
 git push --force-with-lease
@@ -286,15 +339,7 @@ git push --force-with-lease
 
 ---
 
-## ✅ 4. Ignore o Desnecessário
-
-Sempre use `.gitignore` para não subir:
-
-* node_modules
-* venv
-* .env
-* **pycache**
-* arquivos temporários
+## ✔ Use .gitignore
 
 Exemplo:
 
@@ -304,29 +349,67 @@ __pycache__/
 .env
 node_modules/
 *.log
+*.sqlite3
 ```
 
 ---
 
-# 🧠 Fluxo Profissional Mais Comum
+# 🚀 Fluxo Profissional
+
+Fluxo mais usado no dia a dia:
 
 ```bash
 git pull
 git add .
-git commit -m "mensagem clara"
+git commit -m "mensagem"
 git push
 ```
 
 ---
 
-# 🏁 Fim do Manual
+# 🧠 Fluxo Completo
 
-Este documento cobre:
+```bash
+git status
+git pull
+git add .
+git commit -m "mensagem clara"
+git push origin main
+```
 
-* Configuração
-* SSH
-* Fluxo profissional
+---
+
+# 📌 Convenção de Commits (Profissional)
+
+| Tipo     | Uso                 |
+| -------- | ------------------- |
+| feat     | nova funcionalidade |
+| fix      | correção de bug     |
+| docs     | documentação        |
+| style    | formatação          |
+| refactor | refatoração         |
+| chore    | ajustes gerais      |
+
+Exemplo:
+
+```bash
+git commit -m "docs: format git manual"
+```
+
+---
+
+# 🏁 Final
+
+Este manual cobre:
+
+* Conceitos do Git
+* Configuração inicial
+* SSH profissional
 * Comandos essenciais
+* Comandos intermediários
 * Comandos avançados
 * Diagnóstico
 * Boas práticas
+* Fluxo profissional
+
+Documento pronto para uso acadêmico e profissional.
