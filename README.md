@@ -1,25 +1,25 @@
-# Projeto de Estudo — Git Básico com Documentação Comentada
+# Study Project — Basic Git with Annotated Documentation
 
-Este repositório foi criado com o objetivo de **consolidar o aprendizado em Git** por meio de um projeto simples, porém estruturado de forma profissional, acompanhado de **documentação detalhada e comentada**.
+This repository was created to **consolidate learning of Git** through a simple project that is professionally structured and accompanied by **detailed, annotated documentation**.
 
-O foco principal não é o projeto em si, mas sim o **uso correto do Git**, seus comandos, fluxos de trabalho e boas práticas, desde o nível iniciante até conceitos mais avançados.
+The primary focus is not the project itself but the **correct use of Git** — its commands, workflows, and best practices — from beginner level to more advanced concepts.
 
-## Objetivos do repositório
+## Repository goals
 
-- Servir como material de estudo e referência para Git
-- Praticar versionamento em um projeto real, ainda que simples
-- Documentar comandos, conceitos e fluxos de forma clara e progressiva
-- Criar uma base sólida para uso do Git em projetos acadêmicos e profissionais
+- Serve as study material and a reference for Git
+- Practice version control in a real project, even if simple
+- Document commands, concepts, and workflows clearly and progressively
+- Create a solid foundation for using Git in academic and professional projects
 
-## Estrutura do projeto
+## Project structure
 
-O repositório é composto por:
+The repository consists of:
 
-- Um projeto front-end básico (HTML, CSS e JavaScript)
-- Um arquivo `.gitignore` configurado com padrões comuns
-- Documentação técnica detalhada sobre Git
+- A basic front-end project (HTML, CSS, and JavaScript)
+- A `.gitignore` file configured with common patterns
+- Detailed technical documentation about Git
 
-Estrutura de pastas:
+Folder structure:
 
 ```
 
@@ -33,9 +33,9 @@ Estrutura de pastas:
 
 ```
 
-## Documentação
+## Documentation
 
-A documentação principal está localizada em:
+The main documentation is located at:
 
 ```
 
@@ -43,26 +43,26 @@ docs/git-manual.md
 
 ```
 
-Nesse arquivo são abordados:
+This file covers:
 
-- Conceitos fundamentais do Git
-- Configuração inicial do ambiente
-- Comandos fundamentais, intermediários e avançados
-- Inspeção, diagnóstico e manutenção do repositório
-- Fluxos de trabalho comuns
-- Boas práticas no uso do Git
+- Fundamental Git concepts
+- Initial environment setup
+- Basic, intermediate, and advanced commands
+- Repository inspection, diagnosis, and maintenance
+- Common workflows
+- Best practices for using Git
 
-O material foi escrito com foco em **clareza técnica**, evitando atalhos excessivos e garantindo que cada comando seja compreendido, não apenas executado.
+The material was written with an emphasis on **technical clarity**, avoiding excessive shortcuts and ensuring that each command is understood, not just executed.
 
-## Público-alvo
+## Target audience
 
-Este repositório é indicado para:
+This repository is intended for:
 
-- Estudantes de tecnologia
-- Iniciantes em Git
-- Pessoas que desejam uma referência confiável para consultas futuras
-- Quem busca entender Git além de simples comandos copiados
+- Technology students
+- Git beginners
+- People who want a reliable reference for future consultation
+- Those who want to understand Git beyond copied commands
 
-## Observações
+## Notes
 
-O projeto foi desenvolvido com fins educacionais e pode ser expandido ou adaptado conforme a evolução dos estudos.
+The project was developed for educational purposes and can be expanded or adapted as studies progress.
